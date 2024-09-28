@@ -1,0 +1,59 @@
+Youtube - Coding Simplified
+
+Agenda:
+
+Intro to JUnit
+How JUnit works
+Annotations used in JUnit
+Assertions in JUnit
+Reporting in JUnit
+Misc. Topics:
+	Nested Test cases in Junit
+	Lazy Assert
+	Repeated tests
+	Tags and Conditional Execution
+
+-> Life Cycle
+-------------------------------------------------
+Understanding JUnit5 Architecture
+Setup the Junit Project
+Write tests and learn the Junit API
+	Assertion, Life Cycles, Execution Control
+Handling Scenarios
+	Exception Handling
+	Conditional Execution
+	Repeated Tests
+-------------------------------------------------
+Junit is a unit testing framework for the Java. It plays important role for test-driven development.
+
+Why do we need testing?
+
+The point of writing the test cases for application is to verify the ongoing execution of the program/application which continues to work in the future.
+
+Testing Procedure
+
+Preparation
+Provide Test inputs
+Run the tests
+Provide expected output
+Verify the result
+If fails -> Alert the Dev.
+
+Junit Framework provides API for easing out the dev to manually wite the elaborate test cases
+
+Dev just need to provide Test inputs, expected output and running the test. Junit framework will verify the result and alert dev of test case fails
+
+Annotations:
+
+@Test: Method which is to be run as test case.
+Assertions.asseertEquals -> Provides method which are used to compare the Actual valule of application to the expected result
+@BeforeAll: Runs before all test case or once for a class
+ - Add static as it runs while loading the class
+@TestInstance(TestInstance.Lifecycle.PER_CLASS): It'll run @BeforeAll/@AfterAll without adding method as static
+@AfterAll: Runs After all test case or once for a class
+@BeforeEach: Runs before running each test cases
+@AfterEach: Runs after running each test cases
+@DisplayName: To add proper name of test case
+@Disabled: To disable particular test case
+
+
