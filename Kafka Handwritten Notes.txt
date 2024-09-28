@@ -1,0 +1,221 @@
+Kafka is distributed streaming platform.
+
+Components
+Producer
+MessageBroker
+Consumer
+
+
+In Big organisations the data trasnmission among the applications become messy so Kafka is designed
+
+Kafka Clusters are bunch of kafka 
+
+Core Concepts
+-------------
+Producer
+Consumer
+Broker
+Cluster
+Topic
+Partitions
+Offset
+Consumer Groups
+
+Producer
+It is an application which sends messages, it sneds the data from datasource e.g. DB or File to Kafka as bytes
+
+Consumer
+It is an application which recieves data from Kafka
+It request data from Kafka and fetches the data requested
+
+Consumer can request more message and kafka sends data.
+
+Broker
+It is Kafka Server. It atcs as message broker between Producer and Consumer
+
+Cluster
+It is group of computers, each running instance of Kafka Broker
+
+Topic
+It is an arbitary name for a data stream, whch stands which type of data producer is sending and consumer is recieving
+
+Partitions
+Toppic is didvded into samller partions and store the partitons on broker in large cluster
+This will resolve storage capacity problem
+
+The number of partitions in topic is decided by user/developer
+-> It is smaller unit of topic and sits on the broker.
+
+Offset
+It is unique sequence id for message in partition and it is automatically assinged by broker and it is immutable
+Offset is assigned to message in the order of arrival
+
+Offset is not global among other partition, it is only confined to one partion.
+
+If user want to locate message in kafka
+Topic Name
+Partion number
+Offset Number
+
+Consumer group
+It is group of Consumers, it woukd be helpful when the data received is huge. So Consumer group can break donw such load by distributing the load among the group of consumers.
+-> Max. number of consumers in COnsumer Group is limited to the partions in topic.
+
+One partions should not have more consumers in Consumer group to avoid the duplicate processing
+
+Kafka Connect
+-------------
+
+What is Kafka Connect
+How Kafka Connect Works
+Kafka Connect Scalability
+Kafka Connect Transformations
+Kafka Connect Architecture
+
+What is Kafka Connect?
+It is system which decouples Producer/Consumer from appilcation.
+It is placeed between datasource/Consumer and Kafka Cluster.
+User can configure the Kafka Connect
+
+Source Connector -> Between Producer API (datasource) and Kafka Cluster
+Sink Connector -> Between Kafka Cluster and Consumer API (External System)
+
+How Kafka Connect Works?
+Reading and Writing from one data source to other have different mechanisms e.g, Reading data from Hadoop and storing the data to Google firebase 
+
+Kafka Conect framework provides the code implementation for above situations
+
+Source Connector
+-> SourceConnector
+-> SourceTask
+
+Sink Connector
+-> SinkConnector
+-> SinkTask
+
+User need to choose the right connector for Source/Sink Connector e.g., for JDBC operations, user need to configure Source/Sink Connector with JDBC Connector which is readily avaliable
+
+
+Kafka Connect Scalability
+
+Each Kafka Connector is cluster Connect Workers, which shares the workload, Source Connect Worker pulls one record from task and other may pull different record
+
+And one Kafka Connector can act as both Source and Sink Connector, can configure more connectors on single Connector
+
+Kafka Connect Transformations
+
+Single Message Transformations
+E.g, 
+Add a new field in yout record using static data
+Mask the fields 
+
+Kafka Connect Architecture
+Worker : 
+Fault tolerance and can group to form Worker Group.
+If one worker in group crashes, other workers can re assign the tasks among the working workers and will again assing the task to new worker. (Load Balancing)
+
+Connector:
+
+COnfiguration for Connector can be determined by below 
+DB Connection details 
+Source Table List
+Polling frequency
+Max Parallelism
+
+Task Split
+Task List & Configuration
+
+SourceTask/SinkTask is only for determining the task and interact with external system such as Database, Data wareouse etc not for the sending the data to kafka cluster.
+Connector is installed on the worker e.g., JDBC Connector, Snonwflake Connector etc.
+Worker executes the task and sends the data to the kafka clusters
+
+Task
+
+
+Kafka Streams
+-------------
+What is Real Time Stream Processing 
+What is Kafka
+Kafka Stream Architecture
+
+What is Real Time Stream Processing ?
+Data Streams are :
+	Unbounded - no definite start or end
+	Often Infinite and ever growing
+	Sequence of data in small packets
+E.g., Sensor data, Log Entries, Bank Transactions
+
+To process such data
+Approach 1 : Store the data in DB and asking Query at one time
+Approach 2: Create Job and ask bunch of Queries and schedule the job at regular intervals
+Approach 3: Stream processing
+User asks the query at one time but results are updated continuosly based on data which is updated in real time. 
+
+-> Kafka Producer, Consumer and Kafka Connect may be used for data integration and migration but not suitable for Stream Processing.
+
+Kafka Streams:
+It is Java/Scala Library, where input must be a Kafka Topic
+It can be embedded into Microservices
+It can be deployed in anaywhere -> No Seperate configuration or Cluster is needed
+Provides out-of-the-box Parallel processing high scalability and fault tolerance
+
+-> Sole purpose is to handle Stream Porcessing
+
+Kafka Streams Architecture:
+
+Data source -> Kafka Topic in Kafka Cluster -> Kafka Streams Application
+Kafka Stream App will be running outside the Kafka Cluster
+
+Kafka Stream will allocate the no. of tasks based on the no. of partitions for each topic
+
+Kafka Stream Appliaction can be multi-threaded so that the Tasks will be allocated to multiple threads for parallel processing. It is done by the Kafka Stream Framework
+
+Kafka Stream framework will also do load balancing if more instances were added
+
+Kafka Stream Framework will also reassign the task of machine crashes and again reassing to same machine if it recovers -> Fault tolerance
+
+KSQL
+----
+-> It is SQL for Kafka
+-> It runs in two modes
+	Interactive Mode -> CLI, Ideal for Dev
+	Headless Mode -> Ideal for Prod
+
+KSQL Components
+	KSQL Engine-----_ KSQL Server
+	REST Interface--
+	KSQL Client (CLI/UI)
+
+A Group of KSQL Servers form a cluster which is different from Kafka Cluster
+KSQL Engine -> Core Component, whichis responsible for executing KSQL Queries
+REST Interface provodes an interface woth client and ineternally communicate with KSQL Engine to execute queries.
+
+KSQL Queries
+It allows you to join two topics
+Apply filters on real time data
+Sink the result of query into another topic
+
+Screenshots
+
+
+Coding starts
+-------------
+Installing Single Node Kafka Cluster
+Using Producer and Consumer
+Installing Multi-Node Kafka Cluster
+Using Consumer Group
+
+Zookeper:
+It is similar to database which kafka brokers will store a bunch of shared information and used among kafka brokers for coordination.
+
+Installing Single Node Kafka Cluster:
+Initiating Zookeeper
+zookeeper-server-start.bat etc\kafka\zookeeper.properties
+In other terminal: (Starting Kafka Broker)
+bin\windows\kafka-server-start etc\kafka\server.properties
+
+
+
+
+
+ 
