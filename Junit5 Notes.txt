@@ -47,12 +47,21 @@ Annotations:
 
 @Test: Method which is to be run as test case.
 Assertions.asseertEquals -> Provides method which are used to compare the Actual valule of application to the expected result
+
+Like in Normal Java file, JVM Searches with main() method, JVM searches @Test annotation for executing the test cases (it is starting point)
+
+Life Cycle Hooks
+---------------
 @BeforeAll: Runs before all test case or once for a class
- - Add static as it runs while loading the class
-@TestInstance(TestInstance.Lifecycle.PER_CLASS): It'll run @BeforeAll/@AfterAll without adding method as static
+It needs an instance to run the method with @BeforeAll annotation, So wothout static JVM can't run this method unless add static before method signature. Static method doesn't need any instance to run.
+ - Add static as it runs while loading the class or,
+ - @TestInstance(TestInstance.Lifecycle.PER_CLASS): Annotates to class, Creates an instance of test class
+	It'll run @BeforeAll/@AfterAll without adding method as static
+
 @AfterAll: Runs After all test case or once for a class
 @BeforeEach: Runs before running each test cases
 @AfterEach: Runs after running each test cases
+--------------
 @DisplayName: To add proper name of test case
 @Disabled: To disable particular test case
 
