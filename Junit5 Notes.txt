@@ -65,4 +65,80 @@ It needs an instance to run the method with @BeforeAll annotation, So wothout st
 @DisplayName: To add proper name of test case
 @Disabled: To disable particular test case
 
+Assertions class provides all methods to compare the result fo testing method with user defined result
+
+Assertions.assertEquals(<Expected Results>, <method result>)
+	E.g., Assertions.assertEquals(3,calc.add(1,2));
+Assertions.assertNotEquals(<Unexpected Results>, <method result>)
+Assertions.assertArrayEquals(<Expected Array result>, <method result>);
+Assertions.assertIterableEquals(<Expected Iteratable Obj.>, <MethodResult>);
+Assertions.assertNotNull(<method result>); -> Checkes if passed object is not null
+Assertions.assertTrue(<method result>); -> Checks if passed object returns true
+
+Assertions.assertThrows(<Expected Exception Class>, Executable Method); -> Checkes if the method is throwing Expcted exception
+	E.g., Assertions.assertThrows(ArthimeticException.class, () -> calc.div(1,0)); 
+			() -> calc.div(1,0) -> Executable method using Lambda Expression
+			Checks whether calc.div(1,0) throws Arthimetic Exception
+
+Assertions.assertAll(Executable Assertion Methods, ..., ...) -> Checks if all Assertions passed in assertAll method passes
+	E.g., Assertions.assertAll(
+                () -> Assertions.assertEquals(4, calc.addTwoNos(2,2),"AssertEquals Test Failed"),
+                () -> Assertions.assertThrows(ArithmeticException.class, () -> calc.divTwoNos(1,0), "AssertThrows failed")
+        );
+
+Asertions.assertTimeout(); -> Checks whether method can't return result in time
+
+
+
+Misc.
+-----
+
+1) Nested Test class -> @Nested Can include similar test cases in one unit
+2) @EnabledOnOs -> Tets case will execute if the mentioned OS is present in system
+	@EnabledOnOs(OS.LINUX) -> Test case will execute of OS is Linux
+3) @RepeatedTest -> Runs the test case case multiple times
+	@RepeatedTest(3) -> Runs Test case for 3 times.
+   RepetitionInfo -> Provides how many times test case executed with @Repeatedtest done
+
+E.g,
+@RepeatedTest(3)
+    public void addRepeatedTest(RepetitionInfo info)
+    {
+        if(info.getCurrentRepetition() <=2 )
+        {
+            Assertions.assertEquals(10, calc.addTwoNos(5,5));
+        }
+        else
+        {
+            Assertions.assertEquals(20, calc.addTwoNos(10,10));
+        }
+    }
+
+
+
+Mockito
+-------
+
+Mockito is way to test the functionality of a class in isolation
+It doesn't require a DB Connection or Properties file read or any Server Connection to test functionality of class.
+Moc Objects do mock the real service.
+A Mock Object will always returns a dummy data corresponding to some dummy input passed.
+
+Dependency: mockito-core, junit-jupiter-engine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
